@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ebastari Nursery Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #4CAF50; /* Base green */
+            --dark-green: #388E3C; /* Darker green */
+            --card-background: #FFFFFF;
+            --text-dark: #333333;
+            --whatsapp-green: #25D366; /* WhatsApp brand color */
+            --whatsapp-dark: #128C7E;
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+        }
+
+        /* Keyframes untuk Animasi Daun Latar Belakang */
+        @keyframes subtleMove {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.1; }
+            50% { transform: translateY(-10px) rotate(1deg); opacity: 0.15; }
+            100% { transform: translateY(0) rotate(0deg); opacity: 0.1; }
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            /* Latar Belakang Gradien */
+            background: linear-gradient(135deg, var(--primary-green) 0%, #38A057 100%);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Pola Tanaman Dinamis */
+        .plant-pattern {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none;
+        }
+        .plant-pattern i {
+            position: absolute; font-size: 8em; color: white; opacity: 0.1;
+            animation: subtleMove 15s ease-in-out infinite alternate;
+        }
+        .plant-pattern i:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        .plant-pattern i:nth-child(2) { bottom: 5%; right: 10%; font-size: 6em; animation-delay: 5s; }
+        .plant-pattern i:nth-child(3) { top: 40%; right: 20%; font-size: 7em; animation-delay: 10s; }
+        .plant-pattern i:nth-child(4) { bottom: 30%; left: 30%; font-size: 5em; animation-delay: 2s; }
+
+        .login-container {
+            background-color: var(--card-background);
+            width: 100%;
+            max-width: 380px;
+            border-radius: 28px;
+            padding: 30px;
+            box-shadow: 0 15px 40px var(--shadow-medium);
+            z-index: 10;
+            text-align: center;
+        }
+
+        .app-logo {
+            color: var(--dark-green);
+            font-size: 2.5em;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        p.subtitle {
+            font-size: 0.9em;
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85em;
+            font-weight: 500;
+            color: var(--dark-green);
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #EEE;
+            border-radius: 12px;
+            font-size: 1.1em;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.2);
+            outline: none;
+        }
+        
+        .whatsapp-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 15px;
+            /* Gradien Green */
+            background: linear-gradient(to right, var(--whatsapp-green), var(--whatsapp-dark));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: 25px; /* Spasi dari input terakhir */
+        }
+
+        .whatsapp-btn i {
+            margin-right: 10px;
+            font-size: 1.3em;
+        }
+
+        /* Feedback Hover/Tap */
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.6);
+        }
+        .whatsapp-btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .info {
+            font-size: 0.9em;
+            color: var(--dark-green);
+            margin-top: 20px;
+            text-align: center;
+            padding: 10px;
+            border: 1px dashed var(--primary-green);
+            border-radius: 10px;
+            background-color: #f0fdf0;
+        }
+    </style>
+</head>
+<body>
+    <div class="plant-pattern">
+        <i class="fas fa-leaf"></i>
+        <i class="fas fa-seedling"></i>
+        <i class="fas fa-tree"></i>
+        <i class="fas fa-leaf"></i>
+    </div>
+
+    <div class="login-container" role="main" aria-label="Ebastari Nursery Pro">
+        <div class="app-logo">
+            <i class="fas fa-seedling"></i>
+        </div>
+        <h2>Ebastari NurseryPro</h2>
+        <p class="subtitle">Aplikasi Nursery PT Energi Batubara Lestari.</p>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="username">Peran (admin atau guest)</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    placeholder="Ketik: admin atau guest" 
+                    required 
+                    autocomplete="off" 
+                />
+            </div>
+
+            <div id="passwordDiv" class="input-group">
+                <label for="password">Kata Sandi (Hanya untuk Admin)</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    placeholder="Masukkan kata sandi" 
+                    autocomplete="off" 
+                />
+            </div>
+
+            <div id="phoneDiv" class="input-group hidden">
+                <label for="phone">Nomor WhatsApp (Contoh: 6281234567890)</label>
+                <input 
+                    type="tel" 
+                    id="phone" 
+                    name="phone" 
+                    placeholder="Masukkan nomor WA aktif" 
+                    pattern="[0-9]{10,15}" 
+                />
+            </div>
+
+            <div id="otpDiv" class="input-group hidden">
+                <label for="otp">Masukkan Kode OTP</label>
+                <input 
+                    type="number" 
+                    id="otp" 
+                    name="otp" 
+                    placeholder="Kode 6 digit" 
+                />
+            </div>
+
+            <button type="submit" id="submitBtn" class="whatsapp-btn">
+                <i class="fas fa-sign-in-alt"></i> Masuk
+            </button>
+        </form>
+
+        <div class="info" id="infoMsg"></div>
+    </div>
+
+<script>
+    const loginForm = document.getElementById('loginForm');
+    const usernameInput = document.getElementById('username');
+    const passwordDiv = document.getElementById('passwordDiv');
+    const phoneDiv = document.getElementById('phoneDiv');
+    const otpDiv = document.getElementById('otpDiv');
+    const infoMsg = document.getElementById('infoMsg');
+    const submitBtn = document.getElementById('submitBtn');
+
+    let generatedOTP = null;
+    let guestStage = 0; // 0 = default, 1=OTP dibuat/menunggu kirim WA, 2=verifikasi OTP
+
+    // --- LOGIKA PERUBAHAN FORM BERDASARKAN USERNAME ---
+    usernameInput.addEventListener('input', () => {
+        const user = usernameInput.value.trim().toLowerCase();
+        
+        // Reset semua state
+        infoMsg.textContent = '';
+        generatedOTP = null;
+        guestStage = 0;
+        otpDiv.classList.add('hidden');
+        submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Masuk';
+        submitBtn.classList.remove('whatsapp-btn'); // Hapus style WA saat default
+
+        if (user === 'guest') {
+            // Guest: Tampilkan nomor WA, Sembunyikan Password
+            phoneDiv.classList.remove('hidden');
+            passwordDiv.classList.add('hidden');
+            submitBtn.classList.add('whatsapp-btn'); // Tampilkan style WA untuk guest
+            submitBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Dapatkan Akses (OTP)';
+        } else if (user === 'admin') {
+            // Admin: Tampilkan Password, Sembunyikan nomor WA/OTP
+            phoneDiv.classList.add('hidden');
+            passwordDiv.classList.remove('hidden');
+        } else {
+            // Default/user lain: Sembunyikan WA, Tampilkan Password (default)
+            phoneDiv.classList.add('hidden');
+            passwordDiv.classList.remove('hidden');
+        }
+    });
+
+    // --- LOGIKA SUBMIT FORM ---
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const user = usernameInput.value.trim().toLowerCase();
+
+        if (user === 'admin') {
+            const pwd = this.password.value.trim().toLowerCase();
+            // Cek Password Admin
+            if (pwd === 'kalimantan selatan') {
+                alert('Selamat datang, Admin!');
+                // Redirect ke link admin
+                window.location.href = 'https://ebastari.github.io/Home/HOME.html';
+            } else {
+                alert('Password Admin salah.');
+            }
+        } else if (user === 'guest') {
+            
+            // --- Tahap 1: Kirim / Generate OTP ---
+            if (guestStage === 0) {
+                const phone = this.phone.value.trim();
+                // Sederhanakan nomor WA ke format yang benar untuk link
+                const cleanPhone = phone.startsWith('0') ? '62' + phone.substring(1) : phone; 
+                
+                if (!cleanPhone.match(/^[0-9]{10,15}$/)) {
+                    alert('Masukkan nomor WhatsApp yang valid (10-15 digit angka, diawali 62).');
+                    return;
+                }
+                
+                generatedOTP = Math.floor(100000 + Math.random() * 900000); // OTP 6 digit
+                guestStage = 1;
+
+                infoMsg.innerHTML = `✅ **OTP Dibuat!** Silakan klik tombol di bawah. Jendela WhatsApp akan terbuka untuk Anda kirimkan kode ${generatedOTP} ke nomor Anda sendiri.`;
+                otpDiv.classList.remove('hidden');
+                submitBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Kirim Kode OTP & Verifikasi';
+
+                // Buat link WhatsApp otomatis dengan pesan berisi kode OTP
+                const waMessage = `Kode OTP Integrated Nursery Anda adalah: ${generatedOTP}. Masukkan kode ini di halaman login.`;
+                const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(waMessage)}`;
+
+                // Buka tab WhatsApp Web/Aplikasi
+                window.open(waUrl, '_blank');
+                
+            } 
+            // --- Tahap 2: Verifikasi Kode OTP ---
+            else if (guestStage === 1) {
+                const otpInput = this.otp.value.trim();
+                
+                if (otpInput === '') {
+                    alert('Masukkan kode OTP yang diterima.');
+                    return;
+                }
+
+                if (otpInput === generatedOTP.toString()) {
+                    alert('Login Guest berhasil. Selamat datang!');
+                    infoMsg.textContent = 'Akses diberikan. Mengarahkan ke dashboard...';
+                    
+                    // Reset state (opsional)
+                    guestStage = 0;
+                    generatedOTP = null;
+                    
+                    // Redirect ke link guest
+                    window.location.href = 'https://ebastari.github.io/Home/HOME.html';
+                } else {
+                    alert('Kode OTP salah. Silakan coba lagi.');
+                }
+            }
+        } else {
+            alert('Hanya username "admin" atau "guest" yang diperbolehkan.');
+        }
+    });
+
+    // Jalankan pengecekan input awal saat halaman dimuat
+    window.onload = () => {
+        // Simulasikan input untuk mengatur tampilan awal jika field tidak kosong
+        usernameInput.dispatchEvent(new Event('input'));
+    };
+</script>
+</body>
+</html>
