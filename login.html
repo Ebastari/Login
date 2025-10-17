@@ -73,6 +73,16 @@ body {
 
 @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
 
+/* Tambahan untuk tulisan "Login" */
+.login-title {
+    text-align: center;
+    font-size: 1.6em;
+    font-weight: 700;
+    color: var(--dark-green);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
 h2 { color: var(--text-dark); margin-bottom: 5px; font-weight: 700; }
 p.subtitle { color: #777; font-size: 0.9em; margin-bottom: 25px; }
 
@@ -136,6 +146,7 @@ button.whatsapp-btn:active { transform: translateY(-1px); }
 
 <!-- Login Section -->
 <div class="login-container" role="main">
+  <div class="login-title">Login</div>
   <h2>Montana AI</h2>
   <p class="subtitle">Artificial Intelligence for Smart Land Reclamation</p>
 
@@ -226,14 +237,12 @@ form.addEventListener('submit', (e) => {
 
   // === LOGIN ADMIN ===
   if (role === 'admin') {
-    const passInput = document.getElementById('password');
-    const pass = passInput ? passInput.value.trim().toLowerCase() : '';
-
+    const pass = form.password.value.trim().toLowerCase();
     if (pass === 'kalimantan selatan') {
       alert('✅ Selamat datang, Admin!');
       window.location.href = 'https://ebastari.github.io/homeadmin/HOME%20-%20admin.html';
     } else {
-      alert('❌ Password Admin salah! Pastikan ketik "kalimantan selatan".');
+      alert('❌ Password Admin salah!');
     }
     return;
   }
@@ -254,6 +263,8 @@ form.addEventListener('submit', (e) => {
       infoMsg.innerHTML = `✅ OTP Dibuat! Klik tombol di bawah untuk kirim kode <b>${generatedOTP}</b> ke WhatsApp Anda.`;
       otpDiv.classList.remove('hidden');
       submitBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Kirim Kode OTP & Verifikasi';
+
+      // 🔗 Membuka WA di TAB BARU (halaman baru)
       const waMessage = `Kode OTP Montana AI Anda: ${generatedOTP}. Masukkan kode ini di halaman login.`;
       const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(waMessage)}`;
       window.open(waUrl, '_blank');
