@@ -29,34 +29,28 @@ body {
     overflow: hidden;
 }
 
-/* Splash Screen */
-#splash {
+/* === VIDEO SPLASH === */
+#splashContainer {
     position: fixed;
     top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: var(--primary-green);
+    width: 100%;
+    height: 100%;
+    background-color: black;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: white;
-    z-index: 20;
-    animation: fadeOut 1s ease forwards;
-    animation-delay: 4.5s;
+    overflow: hidden;
+    z-index: 100;
+}
+#splashContainer video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* ✅ seluruh video terlihat di semua perangkat */
+    background-color: black;
+    z-index: 101;
 }
 
-#splash p {
-    margin-top: 20px;
-    font-size: 1.2em;
-    letter-spacing: 0.5px;
-    opacity: 0;
-    color: #f7f7f7;
-    animation: fadeIn 2s ease forwards;
-}
-
-@keyframes fadeIn { to { opacity: 1; } }
-@keyframes fadeOut { to { transform: translateY(-100%); opacity: 0; visibility: hidden; } }
-
+/* === LOGIN CONTAINER === */
 .login-container {
     background-color: var(--card-background);
     width: 100%;
@@ -67,20 +61,12 @@ body {
     text-align: center;
     opacity: 0;
     transform: translateY(50px);
-    animation: slideUp 1s ease forwards;
-    animation-delay: 5s;
+    transition: opacity 1s ease, transform 1s ease;
+    z-index: 1;
 }
-
-@keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
-
-/* Tambahan untuk tulisan "Login" */
-.login-title {
-    text-align: center;
-    font-size: 1.6em;
-    font-weight: 700;
-    color: var(--dark-green);
-    margin-bottom: 10px;
-    letter-spacing: 1px;
+.login-container.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 h2 { color: var(--text-dark); margin-bottom: 5px; font-weight: 700; }
@@ -97,7 +83,6 @@ input {
     font-size: 1em;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-
 input:focus {
     border-color: var(--primary-green);
     box-shadow: 0 0 0 4px rgba(47, 110, 65, 0.2);
@@ -135,18 +120,33 @@ button.whatsapp-btn:active { transform: translateY(-1px); }
     border-radius: 10px;
     background-color: #f0fdf0;
 }
+
+/* === RESPONSIVE FIX UNTUK HP === */
+@media (max-width: 600px) {
+  #splashContainer video {
+      object-fit: contain; /* tetap tampil utuh di layar kecil */
+      width: 100vw;
+      height: 100vh;
+  }
+  .login-container {
+      width: 90%;
+      padding: 25px;
+  }
+}
 </style>
 </head>
 <body>
 
-<!-- Splash Screen -->
-<div id="splash">
-  <p id="typing"></p>
+<!-- === VIDEO SPLASH === -->
+<div id="splashContainer">
+  <video id="videoSplash" autoplay muted playsinline preload="auto" webkit-playsinline>
+    <source src="Video Project 1.mp4" type="video/mp4">
+    Browser Anda tidak mendukung video HTML5.
+  </video>
 </div>
 
-<!-- Login Section -->
-<div class="login-container" role="main">
-  <div class="login-title">Login</div>
+<!-- === LOGIN SECTION === -->
+<div class="login-container" role="main" id="loginBox">
   <h2>Montana AI</h2>
   <p class="subtitle">Artificial Intelligence for Smart Land Reclamation</p>
 
@@ -179,23 +179,24 @@ button.whatsapp-btn:active { transform: translateY(-1px); }
 </div>
 
 <script>
-// === Splash Typing Animation ===
-const text = "Montana AI: Artificial Intelligence for Smart Land Reclamation.";
-const typing = document.getElementById("typing");
-let index = 0;
-function type() {
-  if (index < text.length) {
-    typing.textContent += text.charAt(index);
-    index++;
-    setTimeout(type, 35);
-  }
-}
-setTimeout(() => {
-  typing.style.opacity = 1;
-  type();
-}, 800);
+// === SEMBUNYIKAN LOGIN SAMPAI VIDEO SELESAI ===
+const videoSplash = document.getElementById('videoSplash');
+const splashContainer = document.getElementById('splashContainer');
+const loginBox = document.getElementById('loginBox');
 
-// === Login Logic ===
+loginBox.style.display = 'none';
+
+videoSplash.addEventListener('ended', () => {
+  splashContainer.style.transition = 'opacity 1s ease';
+  splashContainer.style.opacity = '0';
+  setTimeout(() => {
+    splashContainer.style.display = 'none';
+    loginBox.style.display = 'block';
+    loginBox.classList.add('show');
+  }, 1000);
+});
+
+// === LOGIN LOGIC ===
 const form = document.getElementById('loginForm');
 const usernameInput = document.getElementById('username');
 const passwordDiv = document.getElementById('passwordDiv');
@@ -237,12 +238,12 @@ form.addEventListener('submit', (e) => {
 
   // === LOGIN ADMIN ===
   if (role === 'admin') {
-    const pass = form.password.value.trim().toLowerCase();
+    const pass = document.getElementById('password').value.trim().toLowerCase();
     if (pass === 'kalimantan selatan') {
       alert('✅ Selamat datang, Admin!');
       window.location.href = 'https://ebastari.github.io/homeadmin/HOME%20-%20admin.html';
     } else {
-      alert('❌ Password Admin salah!');
+      alert('❌ Password Admin salah! Pastikan ketik "kalimantan selatan".');
     }
     return;
   }
@@ -251,7 +252,6 @@ form.addEventListener('submit', (e) => {
   if (role === 'guest') {
     let phone = form.phone.value.trim().replace(/\s+/g, '').replace(/^\+/, '');
     if (phone.startsWith('0')) phone = '62' + phone.substring(1);
-
     if (!/^62\d{8,13}$/.test(phone)) {
       alert('Masukkan nomor WhatsApp valid. Contoh: 6281234567890');
       return;
@@ -263,8 +263,6 @@ form.addEventListener('submit', (e) => {
       infoMsg.innerHTML = `✅ OTP Dibuat! Klik tombol di bawah untuk kirim kode <b>${generatedOTP}</b> ke WhatsApp Anda.`;
       otpDiv.classList.remove('hidden');
       submitBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Kirim Kode OTP & Verifikasi';
-
-      // 🔗 Membuka WA di TAB BARU (halaman baru)
       const waMessage = `Kode OTP Montana AI Anda: ${generatedOTP}. Masukkan kode ini di halaman login.`;
       const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(waMessage)}`;
       window.open(waUrl, '_blank');
@@ -292,7 +290,7 @@ form.addEventListener('submit', (e) => {
   }
 });
 
-// === Inisialisasi Awal ===
+// === Inisialisasi ===
 window.onload = () => usernameInput.dispatchEvent(new Event('input'));
 </script>
 </body>
