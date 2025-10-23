@@ -273,7 +273,7 @@ form.addEventListener('submit',(e)=>{
     const pass=document.getElementById('password').value.trim().toLowerCase();
     if(pass==='kalimantan selatan'){
       alert('✅ Selamat datang, Admin!');
-      window.location.href='https://ebastari.github.io/dasboard/guide.html';
+      window.location.href='https://ebastari.github.io/homeadmin/HOME%20-%20admin.html';
     }else alert('❌ Password salah!');
     return;
   }
@@ -301,7 +301,7 @@ form.addEventListener('submit',(e)=>{
         alert('✅ Login Guest berhasil!');
         infoMsg.textContent='Mengalihkan ke dashboard...';
         guestStage=0;generatedOTP=null;
-        setTimeout(()=>window.location.href='https://ebastari.github.io/homeadmin/HOME%20-%20admin.html',1500);
+        setTimeout(()=>window.location.href='https://ebastari.github.io/montanaAIguest/HOME%20-%20Guest.html',1500);
       }else alert('❌ Kode OTP salah.');
     }
   } else alert('⚠️ Hanya "admin" atau "guest" yang diperbolehkan.');
@@ -309,5 +309,6 @@ form.addEventListener('submit',(e)=>{
 </script>
 </body>
 </html>
+
 
 
