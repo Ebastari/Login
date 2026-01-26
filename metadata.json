@@ -1,0 +1,8 @@
+{
+  "name": "Montana AI Pro",
+  "description": "A clean, modern, and professional dashboard for smart land reclamation management with AI integration.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}
